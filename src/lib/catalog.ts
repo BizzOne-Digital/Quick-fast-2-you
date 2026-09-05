@@ -57,8 +57,8 @@ export type ProductImage = {
 
 export const productImages: Record<string, ProductImage> = {
   "QF-DM4K-08": {
-    src: "https://img.magnific.com/free-psd/highdefinition-dome-security-camera-advanced-surveillance-technology_191095-79300.jpg?semt=ais_hybrid&w=740&q=80",
-    alt: "High-definition dome security camera",
+    src: "https://images.pexels.com/photos/29280895/pexels-photo-29280895.jpeg",
+    alt: "Close-up of surveillance hardware",
   },
   "QF-TR5M-AI": {
     src: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRpHgM5CbH9Gur5APTPdOsVPP4krq2-Ob0Lz0vooainMxQ9w_JMAPCkVmE&s=10",
