@@ -1,26 +1,441 @@
 @import "tailwindcss";
+@import "tw-animate-css";
+@import "shadcn/tailwind.css";
 
+/*
+  Quick Fast 2 You — cinematic dark.
+  Depth comes from surface contrast, lighting and imagery, never from shadows.
+  Purple and blue are functional accents only: one filled action per viewport.
+*/
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --radius: 1.75rem; /* 28px — the image/card radius */
+
+  /* Stages, darkest to lightest */
+  --stage: #000000;
+  --canvas: #0a0a0c;
+  --surface: #121218;
+  --surface-2: #1c1c24;
+  --hairline: #2a2a34;
+
+  /* Text */
+  --frost: #f5f5f7;
+  --muted: #8a8a96;
+  --ink: #0a0a0c;
+  --paper: #f5f5f7;
+
+  /* Accents */
+  --purple: #7c3aed;
+  --purple-electric: #8b5cf6;
+  --blue: #2563eb;
+  --blue-electric: #3b82f6;
+
+  /* shadcn contract */
+  --background: var(--canvas);
+  --foreground: var(--frost);
+  --card: var(--surface);
+  --card-foreground: var(--frost);
+  --popover: var(--surface-2);
+  --popover-foreground: var(--frost);
+  --primary: var(--purple);
+  --primary-foreground: #ffffff;
+  --secondary: var(--surface-2);
+  --secondary-foreground: var(--frost);
+  --muted-background: var(--surface);
+  --muted-foreground: var(--muted);
+  --accent: var(--surface-2);
+  --accent-foreground: var(--frost);
+  --destructive: #e5484d;
+  --destructive-foreground: #ffffff;
+  --border: var(--hairline);
+  --input: #33333d;
+  --ring: var(--blue-electric);
 }
 
 @theme inline {
+  --color-stage: var(--stage);
+  --color-canvas: var(--canvas);
+  --color-surface: var(--surface);
+  --color-surface-2: var(--surface-2);
+  --color-hairline: var(--hairline);
+  --color-frost: var(--frost);
+  --color-paper: var(--paper);
+  --color-ink: var(--ink);
+  --color-purple: var(--purple);
+  --color-purple-electric: var(--purple-electric);
+  --color-blue: var(--blue);
+  --color-blue-electric: var(--blue-electric);
+
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted-background);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+
+  /* Deliberately restricted radius set */
+  --radius-sm: 0.625rem; /* 10px links */
+  --radius-md: 1rem;
+  --radius-lg: 1.75rem; /* 28px cards + images */
+  --radius-xl: 1.75rem;
+  --radius-2xl: 1.75rem;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  html {
+    scroll-behavior: smooth;
+    background: var(--canvas);
+  }
+
+  body {
+    @apply bg-canvas text-frost font-sans antialiased;
+    font-synthesis-weight: none;
+  }
+
+  ::selection {
+    background: var(--purple);
+    color: #fff;
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--blue-electric);
+    outline-offset: 3px;
+  }
+
+  h1,
+  h2,
+  h3 {
+    text-wrap: balance;
+  }
+
+  p {
+    text-wrap: pretty;
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 1ms !important;
+    transition-duration: 1ms !important;
+  }
+}
+
+@layer components {
+  /* ---------- shell ---------- */
+
+  .q-shell {
+    width: 100%;
+    max-width: 90rem; /* 1440px */
+    margin-inline: auto;
+    padding-inline: 1.5rem;
+  }
+
+  @media (min-width: 48rem) {
+    .q-shell {
+      padding-inline: 2.5rem;
+    }
+  }
+
+  @media (min-width: 80rem) {
+    .q-shell {
+      padding-inline: 4rem;
+    }
+  }
+
+  /* Section rhythm: 88px to 120px */
+  .q-band {
+    padding-block: 5.5rem;
+  }
+
+  @media (min-width: 48rem) {
+    .q-band {
+      padding-block: 7.5rem;
+    }
+  }
+
+  /* ---------- type ---------- */
+
+  .q-hero {
+    font-weight: 700;
+    font-size: clamp(2.75rem, 7.4vw, 5.75rem);
+    line-height: 1.03;
+    letter-spacing: -0.035em;
+  }
+
+  .q-luxury {
+    font-family: var(--font-playfair), Georgia, serif;
+    font-weight: 600;
+    letter-spacing: -0.025em;
+  }
+
+  .q-type-caret {
+    display: inline-block;
+    width: 0.06em;
+    height: 0.82em;
+    margin-left: 0.12em;
+    vertical-align: -0.06em;
+    background: var(--purple-electric);
+    animation: q-caret-blink 900ms steps(1) infinite;
+  }
+
+  @keyframes q-caret-blink {
+    50% {
+      opacity: 0;
+    }
+  }
+
+  .q-display {
+    font-weight: 600;
+    font-size: clamp(2rem, 4.6vw, 3.5rem);
+    line-height: 1.06;
+    letter-spacing: -0.028em;
+  }
+
+  .q-h2 {
+    font-weight: 700;
+    font-size: clamp(1.625rem, 2.6vw, 2rem);
+    line-height: 1.14;
+    letter-spacing: -0.022em;
+  }
+
+  .q-h3 {
+    font-weight: 600;
+    font-size: 1.25rem;
+    line-height: 1.2;
+    letter-spacing: -0.018em;
+  }
+
+  .q-eyebrow {
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--blue-electric);
+  }
+
+  .q-eyebrow--muted {
+    color: var(--muted);
+  }
+
+  .q-lede {
+    font-size: clamp(1.0625rem, 1.4vw, 1.25rem);
+    line-height: 1.6;
+    letter-spacing: -0.011em;
+    color: var(--muted);
+    max-width: 46ch;
+  }
+
+  .q-body {
+    font-size: 1rem;
+    line-height: 1.65;
+    letter-spacing: -0.008em;
+    color: var(--muted);
+    max-width: 60ch;
+  }
+
+  .q-num {
+    font-variant-numeric: tabular-nums;
+  }
+
+  /* Light band inverts the text roles */
+  .q-on-paper .q-lede,
+  .q-on-paper .q-body {
+    color: #6e6e76;
+  }
+
+  /* ---------- the photographic stage ----------
+     A black plate with a 28px radius that reads as a lit studio: a soft key
+     light from above, coloured rim light, and a vignette pinning the subject
+     into darkness. Product renders and real photography both sit inside it. */
+
+  .q-stage {
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
+    border-radius: var(--radius);
+    background: var(--stage);
+  }
+
+  .q-stage__key {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    background:
+      radial-gradient(
+        85% 60% at 50% 8%,
+        rgba(255, 255, 255, 0.07) 0%,
+        transparent 70%
+      ),
+      radial-gradient(
+        70% 55% at 16% 20%,
+        color-mix(in srgb, var(--purple) 15%, transparent) 0%,
+        transparent 78%
+      ),
+      radial-gradient(
+        65% 55% at 86% 78%,
+        color-mix(in srgb, var(--blue) 14%, transparent) 0%,
+        transparent 78%
+      );
+  }
+
+  /* Vignette above the key light, below the subject. */
+  .q-stage__vignette {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    background: radial-gradient(
+      100% 80% at 50% 45%,
+      transparent 38%,
+      rgba(0, 0, 0, 0.55) 78%,
+      #000 100%
+    );
+  }
+
+  .q-stage__subject {
+    position: relative;
+    z-index: 2;
+  }
+
+  /* Fine grain stops the large black fields banding. */
+  .q-grain::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 3;
+    pointer-events: none;
+    opacity: 0.03;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+
+  /* ---------- links ---------- */
+
+  .q-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.375rem;
+    color: var(--blue-electric);
+    font-size: 1rem;
+    letter-spacing: -0.011em;
+    text-decoration: none;
+    transition: color 220ms ease;
+  }
+
+  .q-link:hover {
+    color: #6aa6ff;
+  }
+
+  .q-link:hover .q-link__chev {
+    transform: translateX(3px);
+  }
+
+  .q-link__chev {
+    transition: transform 220ms ease;
+  }
+
+  /* ---------- hairline rule ---------- */
+
+  .q-rule {
+    height: 1px;
+    background: var(--hairline);
+  }
+
+  /* ---------- motion: one gentle reveal ---------- */
+
+  .q-reveal {
+    opacity: 0;
+    transform: translate3d(0, 18px, 0);
+    transition:
+      opacity 800ms cubic-bezier(0.22, 1, 0.36, 1),
+      transform 800ms cubic-bezier(0.22, 1, 0.36, 1);
+    will-change: opacity, transform;
+  }
+
+  .q-reveal[data-shown="true"] {
+    opacity: 1;
+    transform: none;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .q-reveal {
+      opacity: 1;
+      transform: none;
+    }
+
+    .q-type-caret {
+      animation: none;
+    }
+  }
+}
+
+@layer components {
+  /* ---------- hero photography ----------
+     A full-bleed photograph, shaded so white type clears WCAG AA over any
+     frame: a flat black floor, a purple key from the lower left, a blue rim
+     from the upper right, and a hard black gradient under the copy column. */
+
+  .q-hero-shade {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    background:
+      linear-gradient(
+        to top,
+        rgba(0, 0, 0, 0.86) 0%,
+        rgba(0, 0, 0, 0.5) 28%,
+        rgba(0, 0, 0, 0.08) 62%,
+        rgba(0, 0, 0, 0.34) 100%
+      ),
+      radial-gradient(
+        70% 80% at 4% 96%,
+        color-mix(in srgb, var(--purple) 32%, transparent) 0%,
+        transparent 62%
+      ),
+      radial-gradient(
+        58% 68% at 96% 2%,
+        color-mix(in srgb, var(--blue) 22%, transparent) 0%,
+        transparent 62%
+      ),
+      rgba(0, 0, 0, 0.06);
+  }
+
+  /* Hairline of brand light along the bottom edge, so the hero parts from the
+     canvas below without a border. */
+  .q-hero-edge {
+    position: absolute;
+    inset-inline: 0;
+    bottom: 0;
+    z-index: 2;
+    height: 1px;
+    background: linear-gradient(
+      to right,
+      transparent,
+      var(--purple-electric) 22%,
+      var(--blue-electric) 78%,
+      transparent
+    );
+    opacity: 0.7;
+  }
 }
