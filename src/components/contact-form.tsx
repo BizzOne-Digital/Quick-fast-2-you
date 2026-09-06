@@ -48,7 +48,7 @@ const rows: {
     type: "tel",
     autoComplete: "tel",
     required: true,
-    hint: "The quickest way to settle freight.",
+    hint: "The quickest way to settle shipping.",
   },
 ];
 
@@ -224,7 +224,7 @@ export function ContactForm() {
           />
           <p className="text-xs text-muted-foreground">
             Rough numbers are fine. If you are not sure of the SKU, tell us the
-            channel count and how many days the site has to look back.
+            what the kit is for and roughly how many you need.
           </p>
         </div>
 

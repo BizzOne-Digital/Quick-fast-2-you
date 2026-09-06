@@ -21,30 +21,29 @@ const playfair = Playfair_Display({
 export const metadata: Metadata = {
   metadataBase: new URL("https://quickfast2you.com"),
   title: {
-    default: site.name + " | Wholesale security cameras and surveillance",
+    default: site.name + " | Quality products, great prices",
     template: "%s | " + site.name,
   },
   description:
-    "Quick Fast 2 You is a security camera wholesaler supplying installers, integrators and resellers with domes, bullets, PTZ, LPR, NVRs, surveillance storage and cabling, shipped same day from " +
+    "Quick Fast 2 You sells quality electronics and specialty products at affordable prices — security cameras, dash cameras, sports action cameras, metal detectors, diamond and gold testers, and gadgets. Our inventory changes weekly, with new deals arriving regularly from " +
     site.city +
     ".",
   keywords: [
-    "wholesale security cameras",
-    "CCTV wholesale",
-    "dome camera wholesale",
-    "bullet camera wholesale",
-    "PTZ camera",
-    "LPR camera",
-    "NVR wholesale",
-    "surveillance hard drive",
-    "PoE switch CCTV",
-    "ONVIF cameras",
-    "Dallas CCTV distributor",
+    "security cameras",
+    "dash cameras",
+    "sports action cameras",
+    "metal detectors",
+    "diamond testers",
+    "gold testers",
+    "electronics and gadgets",
+    "affordable electronics",
+    "closeout electronics",
+    "Dallas electronics",
   ],
   openGraph: {
     title: site.name,
     description:
-      "Security cameras, recorders and surveillance storage, wholesale from " +
+      "Quality products at great prices. Security cameras, dash cameras, sports action cameras, metal detectors, diamond and gold testers, electronics and gadgets — new deals every week from " +
       site.city +
       ".",
     type: "website",

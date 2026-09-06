@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { Logo } from "@/components/site-nav";
+import { productCategories, slug } from "@/lib/catalog";
 import { site } from "@/lib/site";
 
 const columns = [
@@ -7,10 +8,10 @@ const columns = [
     heading: "Products",
     links: [
       { href: "/products", label: "All products" },
-      { href: "/products#dome-cameras", label: "Dome cameras" },
-      { href: "/products#bullet-cameras", label: "Bullet cameras" },
-      { href: "/products#ptz-panoramic", label: "PTZ & panoramic" },
-      { href: "/products#recorders-storage", label: "Recorders & storage" },
+      ...productCategories.map((item) => ({
+        href: "/products#" + slug(item.name),
+        label: item.name,
+      })),
     ],
   },
   {
@@ -31,9 +32,9 @@ export function SiteFooter() {
           <div>
             <Logo />
             <p className="q-body mt-5 max-w-[32ch] text-[0.9375rem]">
-              A security camera wholesaler supplying installers, integrators
-              and resellers with cameras, recorders, storage and cabling at
-              direct wholesale prices.
+              Quality products at great prices. We source through company
+              closeouts, auctions and other closeout sources, so our inventory
+              changes weekly and new deals arrive regularly.
             </p>
           </div>
 

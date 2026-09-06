@@ -9,21 +9,21 @@ import { heroes } from "@/lib/heroes";
 import { productImageGallery, products } from "@/lib/catalog";
 import { site, whatsappLink } from "@/lib/site";
 
-const totalUnits = products.reduce((sum, p) => sum + p.stock, 0);
+const totalUnits = products.reduce((sum, p) => sum + (p.stock ?? 0), 0);
 
 export const metadata: Metadata = {
-  title: "Next-gen tech, unbeatable value",
+  title: "About Quick Fast 2 You",
   description:
-    "Quick Fast 2 You is a security camera and surveillance wholesaler in " +
+    "Quick Fast 2 You supplies quality electronics and specialty products at affordable prices from " +
     site.city +
-    ", supplying installers, integrators and resellers with cameras, recorders, storage and cabling direct, with no middleman markup.",
+    ". We buy through company closeouts, auctions and other closeout sources, so our inventory changes weekly and new deals arrive regularly.",
 };
 
 const numbers = [
   { value: "18,400", label: "Square feet of racking" },
-  { value: totalUnits.toLocaleString("en-US"), label: "Cameras on the floor" },
-  { value: "310", label: "Orders picked weekly" },
-  { value: "640", label: "Installers on the books" },
+  { value: totalUnits.toLocaleString("en-US"), label: "Units on the floor" },
+  { value: "Weekly", label: "New stock arriving" },
+  { value: "640", label: "Customers on the books" },
 ];
 
 const values = [
@@ -33,47 +33,47 @@ const values = [
   },
   {
     title: "Quality",
-    body: "A sample lives on our bench for a fortnight before a line gets a SKU: IR range measured in the dark, housing hosed at IP67, recorder run at full channel count for a week. Every pallet is then sampled on arrival and flashed to current firmware.",
+    body: "A sample lives on our bench before a line gets a SKU, and it is tested the way the buyer will use it — cameras in the dark, testers against known samples, electronics run until they are warm. Every pallet is then sampled on arrival.",
   },
   {
     title: "Affordability",
-    body: "We buy depth, in containers, and pass the break down the ladder. Five tiers are published beside every camera so nobody has to negotiate for a fair number.",
+    body: "We buy whole lots through closeouts and auctions and pass the saving down the ladder. Five tiers are published beside every product so nobody has to negotiate for a fair number.",
   },
   {
-    title: "Open standards",
-    body: "Every camera we carry is ONVIF Profile S with an open RTSP path, and every recorder speaks Profile G. Nothing in the catalogue locks your customer into one app or one cloud subscription.",
+    title: "No lock-in",
+    body: "The security cameras we carry are ONVIF Profile S with an open RTSP path, and the recorders speak Profile G. Across the range we avoid lines that only work behind a subscription.",
   },
 ];
 
 const story = [
   {
-    title: "It started with a lead time",
-    body: "Installers around " +
+    title: "It started with one lot",
+    body: "A company closeout came up on security cameras at a price worth taking, while buyers around " +
       site.city +
-      " were waiting three weeks on domes that a distributor two states away had sitting in a box. We bought a container of 4K domes, put them on a rack, and sold them in eleven days.",
+      " were waiting three weeks on the same thing. We put the lot on a rack and it sold in eleven days.",
   },
   {
-    title: "We finished the system",
-    body: "A camera on its own is half a job. Recorders came next, then surveillance-rated drives, PoE switches, outdoor Cat6, junction boxes and rack UPS — so a two-day install stopped needing three suppliers.",
+    title: "The lots were never all cameras",
+    body: "Closeouts and auctions do not sort themselves by category. Dash cams, action cameras, metal detectors, diamond and gold testers and general electronics came through with the cameras — so the shelf, and the customer, widened.",
   },
   {
-    title: "The customer never changed",
-    body: "People who put cameras on walls for a living. Security installers, integrators, locksmiths moving into CCTV, and the resellers who supply them — everything about how we operate is built around that one buyer.",
+    title: "The goal never changed",
+    body: "Give people quality products at affordable prices. That is why the stock turns over weekly instead of sitting: we buy what is worth buying when it comes up, and move it on.",
   },
 ];
 
 const standOut = [
   {
     heading: "No middleman markup",
-    body: "We import direct and hold title. There is no national distributor, no regional master, and no rep commission stacked on your cost before you ever see a number.",
+    body: "We buy through company closeouts, auctions and other closeout sources, and hold title. There is no national distributor, no regional master, and no rep commission stacked on your cost before you ever see a number.",
   },
   {
     heading: "The count is real",
-    body: "Stock figures on this site are a shelf count from our own racking. If it says 4,280 domes, you can order 4,280 and it will go out.",
+    body: "Stock figures on this site are a shelf count from our own racking. If it says 4,280 units, you can order 4,280 and it will go out.",
   },
   {
     heading: "One invoice, one desk",
-    body: "Cameras, the recorder with the drive already fitted, the PoE switch, the cable and the junction boxes on the same paperwork, from the same person, on the same truck.",
+    body: "Cameras, recorders, testers, dash cams and everything else you order on the same paperwork, from the same person, on the same truck.",
   },
   {
     heading: "Trade terms without the theatre",
@@ -85,19 +85,19 @@ const orderPath = [
   {
     step: "01",
     title: "Tell us the site",
-    body: "Send a list, a floor plan or a photo of the job. We check lens, IR range, PoE budget and retention before recommending a line.",
+    body: "Send a list, a photo or just tell us what it is for. We check what is on the racks and what is landing before recommending a line.",
     stat: "Same-day sizing",
   },
   {
     step: "02",
-    title: "Get the trade number",
-    body: "Your quote shows the volume break, case pack, stock position and freight assumptions. There is no account application before the price.",
+    title: "Get the number",
+    body: "Your quote shows the volume break, case pack, stock position and shipping assumptions. There is no account application before the price.",
     stat: "Five volume tiers",
   },
   {
     step: "03",
-    title: "We bench the kit",
-    body: "Recorders can arrive with drives fitted and formatted. Cameras are checked for power, image, IR and current firmware before they leave.",
+    title: "We bench it",
+    body: "Recorders can arrive with drives fitted and formatted. Cameras and electronics are checked for power, function and current firmware before they leave.",
     stat: "ONVIF and RTSP",
   },
   {
@@ -115,20 +115,20 @@ export default function AboutPage() {
         image={heroes.about}
         video="/videos/vid2.mp4"
         eyebrow="Our house"
-        headline="Next-Gen Tech, Unbeatable Value"
+        headline="Quality Products at Affordable Prices"
         subheadline={
-          "A security camera and surveillance wholesaler in " +
+          "Quality products at great prices from " +
           site.city +
-          ", built to get cameras, recorders and storage onto your van faster and cheaper than anyone standing between you and the factory."
+          ". We buy through company closeouts, auctions and other closeout sources, so the inventory changes weekly and new deals arrive regularly."
         }
         actions={
           <>
             <Link href="/products" className={heroPrimary}>
-              Shop All Cameras
+              Shop All Products
               <ArrowUpRight className="size-4" />
             </Link>
             <Link href="/pricing" className={heroSecondary}>
-              View Wholesale Deals
+              See This Week&rsquo;s Deals
               <ChevronRight className="size-4" />
             </Link>
           </>
@@ -194,16 +194,18 @@ export default function AboutPage() {
                 Stock is only useful when it is ready to work
               </h2>
               <p className="q-lede mt-7">
-                Our job is not just to own boxes. It is to make sure the box
-                you receive matches the site you quoted and can go straight to
-                the installer’s bench.
+                Security cameras, dash cameras, sports action cameras, metal
+                detectors, diamond and gold testers, electronics and gadgets.
+                Our job is not just to own boxes — it is to make sure the box
+                you receive matches what you ordered and works the day it
+                arrives.
               </p>
 
               <dl className="mt-10 border-t border-hairline">
                 {[
                   ["Receive", "Sample every pallet and verify the count."],
-                  ["Test", "Power up cameras, IR and recorder channels."],
-                  ["Pack", "Keep the camera, storage and PoE on one dispatch."],
+                  ["Test", "Power up every unit and check it works as sold."],
+                  ["Pack", "Keep the whole order on one dispatch."],
                 ].map(([label, detail]) => (
                   <div
                     key={label}
@@ -291,7 +293,7 @@ export default function AboutPage() {
           <Reveal>
             <p className="q-eyebrow mb-4">Why we stand out</p>
             <h2 id="stand-out" className="q-display max-w-[18ch] text-frost">
-              Direct wholesale pricing, nobody in the middle
+              Closeout buying, nobody in the middle
             </h2>
           </Reveal>
 
@@ -315,13 +317,13 @@ export default function AboutPage() {
       >
         <div className="q-shell q-band">
           <Reveal>
-            <p className="q-eyebrow mb-4">How a trade order works</p>
+            <p className="q-eyebrow mb-4">How an order works</p>
             <h2 id="order-path" className="q-display max-w-[18ch] text-frost">
-              From site photo to van-ready kit
+              From first message to boxes on the truck
             </h2>
             <p className="q-lede mt-7">
-              The useful part of a wholesaler is what happens between the price
-              and the delivery. This is the path we keep short.
+              The useful part of a dealer is what happens between the price and
+              the delivery. This is the path we keep short.
             </p>
           </Reveal>
 
@@ -345,14 +347,14 @@ export default function AboutPage() {
         </div>
       </section>
 
-      {/* Trade desk */}
+      {/* Contact desk */}
       <section aria-labelledby="desk" className="border-t border-hairline">
         <div className="q-shell q-band">
           <Reveal className="grid items-center gap-12 md:grid-cols-[1.4fr_1fr]">
             <div>
-              <p className="q-eyebrow mb-6">Your account contact</p>
+              <p className="q-eyebrow mb-6">Your contact</p>
               <h2 id="desk" className="q-display max-w-[18ch] text-frost">
-                {site.contact} runs the trade desk
+                {site.contact} runs the desk
               </h2>
               <p className="q-lede mt-7">
                 One number and one person, whether it is a first case or a
@@ -384,7 +386,7 @@ export default function AboutPage() {
                 href="/pricing"
                 className="inline-flex h-12 items-center justify-center rounded-full px-7 text-[0.9375rem] text-muted-foreground transition-colors duration-300 hover:text-frost"
               >
-                Read the trade terms
+                Read the pricing terms
               </Link>
             </div>
           </Reveal>

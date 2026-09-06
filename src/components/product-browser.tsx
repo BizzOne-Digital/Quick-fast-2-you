@@ -7,12 +7,14 @@ import { ProductArt } from "@/components/product-art";
 import { WhatsAppIcon } from "@/components/whatsapp-button";
 import {
   categories,
+  isPriced,
   money,
   productImages,
   products,
   slug,
   type Badge,
   type Category,
+  type PricedProduct,
   type Product,
 } from "@/lib/catalog";
 import { site, whatsappLink } from "@/lib/site";
@@ -34,12 +36,16 @@ const badgeStyles: Record<Badge, string> = {
  * order line at the product's case quantity and collects them in a sticky
  * tray, which hands the finished list to WhatsApp — the same route every other
  * enquiry on the site takes.
+ *
+ * Stock bought through closeouts turns over weekly, so only some lines carry a
+ * published price ladder. A line without one shows its description and sends
+ * the buyer to the desk for the current price instead of inventing figures.
  */
 export function ProductBrowser() {
   const [filter, setFilter] = useState<Filter>("All");
   const [tray, setTray] = useState<Record<string, number>>({});
 
-  // Links elsewhere point at /products#dome-cameras and friends. The grid is
+  // Links elsewhere point at /products#dash-cameras and friends. The grid is
   // one flat list, so the hash selects the filter rather than scrolling.
   useEffect(() => {
     const apply = () => {
@@ -64,7 +70,7 @@ export function ProductBrowser() {
   const lines = Object.entries(tray);
   const totalUnits = lines.reduce((sum, [, qty]) => sum + qty, 0);
 
-  function add(product: Product) {
+  function add(product: PricedProduct) {
     setTray((prev) => ({
       ...prev,
       [product.sku]: (prev[product.sku] ?? 0) + product.casePack,
@@ -73,6 +79,19 @@ export function ProductBrowser() {
 
   function clear() {
     setTray({});
+  }
+
+  /** A line with no published price goes straight to the desk instead. */
+  function askMessage(product: Product) {
+    return (
+      "Hi " +
+      site.contact +
+      ", is the " +
+      product.name +
+      " (" +
+      product.sku +
+      ") in stock this week, and what is the price?"
+    );
   }
 
   function orderMessage() {
@@ -87,7 +106,7 @@ export function ProductBrowser() {
       site.contact +
       ", I would like a quote from Quick Fast 2 You on:\n\n" +
       body +
-      "\n\nPlease confirm price and freight."
+      "\n\nPlease confirm price and shipping."
     );
   }
 
@@ -140,8 +159,7 @@ export function ProductBrowser() {
         aria-live="polite"
       >
         {shown.map((product) => {
-          const floor = product.tiers[product.tiers.length - 1].unit;
-          const entry = product.tiers[0].unit;
+          const priced = isPriced(product) ? product : null;
           const inTray = tray[product.sku] ?? 0;
           const image = productImages[product.sku];
           return (
@@ -176,7 +194,9 @@ export function ProductBrowser() {
                   </span>
                 ) : null}
                 <span className="q-stage__subject q-num absolute right-5 top-5 rounded-full border border-white/20 bg-black/60 px-3 py-1.5 text-[0.6875rem] uppercase tracking-[0.12em] text-white/80">
-                  {product.stock.toLocaleString("en-US")} in stock
+                  {product.stock
+                    ? `${product.stock.toLocaleString("en-US")} in stock`
+                    : "In this week"}
                 </span>
               </div>
 
@@ -184,86 +204,120 @@ export function ProductBrowser() {
                 <p className="q-eyebrow q-eyebrow--muted">{product.sku}</p>
                 <h3 className="q-h3 mt-2 text-frost">{product.name}</h3>
 
-                <ul className="q-num mt-4 flex flex-wrap gap-2">
-                  {product.headline.map((figure) => (
-                    <li
-                      key={figure}
-                      className="rounded-full border border-hairline px-3 py-1 text-[0.75rem] text-frost"
-                    >
-                      {figure}
-                    </li>
-                  ))}
-                </ul>
+                {product.headline ? (
+                  <ul className="q-num mt-4 flex flex-wrap gap-2">
+                    {product.headline.map((figure) => (
+                      <li
+                        key={figure}
+                        className="rounded-full border border-hairline px-3 py-1 text-[0.75rem] text-frost"
+                      >
+                        {figure}
+                      </li>
+                    ))}
+                  </ul>
+                ) : null}
 
                 <p className="q-body mt-4 flex-1 text-[0.9375rem]">
                   {product.blurb}
                 </p>
 
-                <details className="group mt-4">
-                  <summary className="q-eyebrow q-eyebrow--muted cursor-pointer list-none text-[0.6875rem] transition-colors duration-300 hover:text-frost">
-                    Full specification
-                  </summary>
-                  <dl className="q-num mt-3 border-t border-hairline">
-                    {product.specs.map(([label, value]) => (
-                      <div
-                        key={label}
-                        className="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1 border-b border-hairline py-2 text-[0.8125rem] last:border-b-0"
-                      >
-                        <dt className="text-muted-foreground">{label}</dt>
-                        <dd className="text-right text-frost">{value}</dd>
-                      </div>
-                    ))}
+                {product.specs ? (
+                  <details className="group mt-4">
+                    <summary className="q-eyebrow q-eyebrow--muted cursor-pointer list-none text-[0.6875rem] transition-colors duration-300 hover:text-frost">
+                      Full specification
+                    </summary>
+                    <dl className="q-num mt-3 border-t border-hairline">
+                      {product.specs.map(([label, value]) => (
+                        <div
+                          key={label}
+                          className="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1 border-b border-hairline py-2 text-[0.8125rem] last:border-b-0"
+                        >
+                          <dt className="text-muted-foreground">{label}</dt>
+                          <dd className="text-right text-frost">{value}</dd>
+                        </div>
+                      ))}
+                    </dl>
+                  </details>
+                ) : null}
+
+                {priced ? (
+                  <dl className="q-num mt-6 flex items-end justify-between gap-4 border-t border-hairline pt-5">
+                    <div>
+                      <dt className="q-eyebrow q-eyebrow--muted text-[0.6875rem]">
+                        From
+                      </dt>
+                      <dd className="mt-1.5 text-[1.5rem] font-semibold tracking-[-0.028em] text-frost">
+                        {money(priced.tiers[priced.tiers.length - 1].unit, 2)}
+                        <span className="ml-1.5 text-[0.8125rem] font-normal text-muted-foreground">
+                          / unit
+                        </span>
+                      </dd>
+                    </div>
+                    <div className="text-right">
+                      <dt className="q-eyebrow q-eyebrow--muted text-[0.6875rem]">
+                        Entry tier
+                      </dt>
+                      <dd className="mt-1.5 text-[0.9375rem] text-muted-foreground">
+                        {money(priced.tiers[0].unit, 2)} at {priced.moq}
+                      </dd>
+                    </div>
                   </dl>
-                </details>
-
-                <dl className="q-num mt-6 flex items-end justify-between gap-4 border-t border-hairline pt-5">
-                  <div>
+                ) : (
+                  <dl className="q-num mt-6 border-t border-hairline pt-5">
                     <dt className="q-eyebrow q-eyebrow--muted text-[0.6875rem]">
-                      Trade from
+                      Current price
                     </dt>
-                    <dd className="mt-1.5 text-[1.5rem] font-semibold tracking-[-0.028em] text-frost">
-                      {money(floor, 2)}
-                      <span className="ml-1.5 text-[0.8125rem] font-normal text-muted-foreground">
-                        / unit
-                      </span>
+                    <dd className="mt-1.5 text-[1.0625rem] text-frost">
+                      Ask for this week&rsquo;s price
                     </dd>
-                  </div>
-                  <div className="text-right">
-                    <dt className="q-eyebrow q-eyebrow--muted text-[0.6875rem]">
-                      Entry tier
-                    </dt>
-                    <dd className="mt-1.5 text-[0.9375rem] text-muted-foreground">
-                      {money(entry, 2)} at {product.moq}
-                    </dd>
-                  </div>
-                </dl>
+                  </dl>
+                )}
 
-                <button
-                  type="button"
-                  onClick={() => add(product)}
-                  className={cn(
-                    "mt-5 inline-flex h-12 items-center justify-center gap-2 rounded-full text-[0.9375rem] font-medium transition-colors duration-300",
-                    inTray
-                      ? "border border-hairline text-frost hover:bg-white/5"
-                      : "bg-purple text-white hover:bg-purple-electric",
-                  )}
-                >
-                  {inTray ? (
-                    <>
-                      <Check className="size-4 text-blue-electric" />
-                      {inTray} in list &middot; add {product.casePack} more
-                    </>
-                  ) : (
-                    <>
-                      <Plus className="size-4" />
-                      Quick add {product.casePack}
-                    </>
-                  )}
-                </button>
-                <p className="mt-2.5 text-center text-[0.75rem] text-muted-foreground">
-                  Case pack {product.casePack} &middot; MOQ {product.moq}{" "}
-                  &middot; {product.lead}
-                </p>
+                {priced ? (
+                  <>
+                    <button
+                      type="button"
+                      onClick={() => add(priced)}
+                      className={cn(
+                        "mt-5 inline-flex h-12 items-center justify-center gap-2 rounded-full text-[0.9375rem] font-medium transition-colors duration-300",
+                        inTray
+                          ? "border border-hairline text-frost hover:bg-white/5"
+                          : "bg-purple text-white hover:bg-purple-electric",
+                      )}
+                    >
+                      {inTray ? (
+                        <>
+                          <Check className="size-4 text-blue-electric" />
+                          {inTray} in list &middot; add {priced.casePack} more
+                        </>
+                      ) : (
+                        <>
+                          <Plus className="size-4" />
+                          Quick add {priced.casePack}
+                        </>
+                      )}
+                    </button>
+                    <p className="mt-2.5 text-center text-[0.75rem] text-muted-foreground">
+                      Case pack {priced.casePack} &middot; MOQ {priced.moq}{" "}
+                      &middot; {priced.lead}
+                    </p>
+                  </>
+                ) : (
+                  <>
+                    <a
+                      href={whatsappLink(askMessage(product))}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="mt-5 inline-flex h-12 items-center justify-center gap-2 rounded-full bg-purple text-[0.9375rem] font-medium text-white transition-colors duration-300 hover:bg-purple-electric"
+                    >
+                      <WhatsAppIcon className="size-4" />
+                      Check today&rsquo;s deal
+                    </a>
+                    <p className="mt-2.5 text-center text-[0.75rem] text-muted-foreground">
+                      {product.lead}
+                    </p>
+                  </>
+                )}
               </div>
             </li>
           );

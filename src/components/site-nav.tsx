@@ -20,7 +20,7 @@ export function Logo({ className }: { className?: string }) {
   return (
     <span className={cn("relative block h-10 w-36 sm:h-11 sm:w-40", className)}>
       <Image
-        src="/Logo/logo.png"
+        src="/logo/logo.png"
         alt="Quick Fast 2 You"
         fill
         sizes="160px"

@@ -11,40 +11,40 @@ import { PageHero, heroPrimary, heroSecondary } from "@/components/page-hero";
 import { Reveal } from "@/components/reveal";
 import { WhatsAppIcon } from "@/components/whatsapp-button";
 import { heroes } from "@/lib/heroes";
-import { bySku, money, products, tierNames } from "@/lib/catalog";
+import { money, pricedBySku, tierNames } from "@/lib/catalog";
 import { site, whatsappLink } from "@/lib/site";
 import { cn } from "@/lib/utils";
 
 export const metadata: Metadata = {
-  title: "Wholesale and bulk rates",
+  title: "Pricing and bulk rates",
   description:
-    "Published trade pricing on security cameras, recorders and storage from Quick Fast 2 You: five volume breaks from a first case to a container, with no account application and no negotiation.",
+    "Published pricing from Quick Fast 2 You: five volume breaks from a first case to a container, with no account application and no negotiation. Quality products at great prices, on inventory that changes weekly.",
 };
 
 const tiers = [
   {
     name: "Retail Starter",
     tierIndex: 0,
-    who: "Sole-trader installers and shops testing a line",
+    who: "Individual buyers, sole traders and shops testing a line",
     entry: "One case, any SKU",
     terms: "Card or transfer, paid up front",
     points: [
       "Buy one case per SKU, mix as many SKUs as you like",
       "Published tier price, no negotiation and no account form",
       "Same-day dispatch on anything cleared before 3pm CT",
-      "Every camera ONVIF Profile S, no cloud subscription to sell",
+      "Every security camera ONVIF Profile S, no cloud subscription to sell",
     ],
     featured: false,
   },
   {
     name: "Small Business",
     tierIndex: 2,
-    who: "Installers and integrators running crews, and resellers",
+    who: "Shops, installers running crews, and resellers",
     entry: "From 4 cases per SKU",
     terms: "Card, transfer, or net 15 after three clean orders",
     points: [
       "Dealer break on every line, typically 25 to 30 percent under entry",
-      "Cameras, recorder, switch and cable consolidated on one invoice",
+      "Everything you order consolidated on one invoice",
       "Stock held 72 hours against a confirmed order",
       "Direct WhatsApp line to " + site.contact + ", no ticket queue",
     ],
@@ -53,7 +53,7 @@ const tiers = [
   {
     name: "Bulk Wholesale",
     tierIndex: 4,
-    who: "Regional distributors, national integrators, container buyers",
+    who: "Regional distributors, national buyers, container buyers",
     entry: "From 40 cases per SKU, or mixed container",
     terms: "30 percent deposit, balance before release",
     points: [
@@ -91,7 +91,7 @@ const faqs = [
   },
   {
     q: "Can I mix cameras and accessories to hit a better tier?",
-    a: "Tiers are per SKU, so 100 domes does not price 100 bullets. What mixing does buy you is freight: a full system of cameras, recorder, drives, switch, cable and junction boxes ships as one consignment on one invoice.",
+    a: "Tiers are per SKU, so 100 of one line does not price 100 of another. What mixing does buy you is shipping: everything you order ships as one consignment on one invoice.",
   },
   {
     q: "How much storage does a job actually need?",
@@ -111,9 +111,8 @@ const kits = [
     parts: [
       ["QF-DM4K-08", 8],
       ["QF-NVR16-4T", 1],
+      ["QF-HDD8T-SV", 1],
       ["QF-PSW8-120", 1],
-      ["QF-CAT6-305", 1],
-      ["QF-JB-ALU", 8],
     ] as [string, number][],
   },
   {
@@ -125,22 +124,19 @@ const kits = [
       ["QF-NVR16-4T", 1],
       ["QF-HDD8T-SV", 1],
       ["QF-PSW8-120", 2],
-      ["QF-CAT6-305", 2],
-      ["QF-UPS1500-R", 1],
     ] as [string, number][],
   },
   {
     name: "32-camera site kit",
-    covers: "A multi-building site with plate capture on the entrance",
+    covers: "A multi-building site with a PTZ on the entrance",
     parts: [
       ["QF-DM4K-08", 16],
       ["QF-BL4K-VF", 12],
-      ["QF-LPR8M-60", 2],
+      ["QF-BL5M-04", 2],
       ["QF-PTZ25X", 2],
-      ["QF-NVR32-8T", 1],
+      ["QF-NVR16-4T", 2],
       ["QF-HDD8T-SV", 3],
       ["QF-PSW8-120", 4],
-      ["QF-UPS1500-R", 1],
     ] as [string, number][],
   },
 ];
@@ -148,29 +144,29 @@ const kits = [
 const ladderSkus = [
   "QF-DM4K-08",
   "QF-BL4K-VF",
-  "QF-LPR8M-60",
+  "QF-PTZ25X",
   "QF-NVR16-4T",
   "QF-HDD8T-SV",
 ];
 
 export default function PricingPage() {
-  const ladder = ladderSkus.map(bySku);
+  const ladder = ladderSkus.map(pricedBySku);
 
   return (
     <>
       <PageHero
         image={heroes.pricing}
-        eyebrow="Trade terms"
-        headline="Wholesale & Bulk Rates Built for You"
-        subheadline="Five volume breaks, published in the open on every camera, recorder, drive and switch we carry. Find your quantity, read your price, and order. No account application, no gatekeeping, no haggling."
+        eyebrow="Pricing"
+        headline="Quality Products, Great Prices"
+        subheadline="Lines we hold in depth carry five volume breaks, published in the open. The rest changes weekly, so ask the desk for today’s price. No account application, no gatekeeping, no haggling."
         actions={
           <>
             <Link href="#quote" className={heroPrimary}>
-              Request Bulk Quote
+              See Current Prices
               <ArrowUpRight className="size-4" />
             </Link>
             <Link href="/products" className={heroSecondary}>
-              Shop All Cameras
+              Shop All Products
               <ChevronRight className="size-4" />
             </Link>
           </>
@@ -183,13 +179,13 @@ export default function PricingPage() {
           <Reveal>
             <p className="q-eyebrow mb-4">Three ways to buy</p>
             <h2 id="tiers" className="q-display max-w-[16ch] text-frost">
-              Pick the tier that matches your floor
+              Pick the tier that matches your order
             </h2>
           </Reveal>
 
           <ul className="mt-14 grid gap-6 lg:grid-cols-3">
             {tiers.map((tier, i) => {
-              const sample = bySku("QF-DM4K-08");
+              const sample = pricedBySku("QF-DM4K-08");
               const unit = sample.tiers[tier.tierIndex];
               return (
                 <Reveal as="li" key={tier.name} delay={i * 90}>
@@ -282,7 +278,7 @@ export default function PricingPage() {
         <div className="q-shell q-band">
           <Reveal className="flex flex-wrap items-end justify-between gap-6">
             <div>
-              <p className="q-eyebrow mb-4">Costed systems</p>
+              <p className="q-eyebrow mb-4">Costed bundles &middot; security cameras</p>
               <h2 id="kits" className="q-display max-w-[18ch] text-frost">
                 Price a whole job, not a parts list
               </h2>
@@ -297,14 +293,15 @@ export default function PricingPage() {
           <ul className="mt-14 grid gap-6 lg:grid-cols-3">
             {kits.map((kit, i) => {
               const rows = kit.parts.map(([sku, qty]) => {
-                const product = bySku(sku);
+                const product = pricedBySku(sku);
                 const unit = product.tiers[2].unit;
                 return { product, qty, unit, line: unit * qty };
               });
               const total = rows.reduce((sum, row) => sum + row.line, 0);
               const cameras = rows
-                .filter((row) => row.product.category.includes("Camera") ||
-                  row.product.category === "PTZ & Panoramic")
+                .filter((row) => row.product.art !== "nvr" &&
+                  row.product.art !== "hdd" &&
+                  row.product.art !== "switchbox")
                 .reduce((sum, row) => sum + row.qty, 0);
               return (
                 <Reveal as="li" key={kit.name} delay={i * 90}>
@@ -338,7 +335,7 @@ export default function PricingPage() {
                         {money(total, 0)}
                       </p>
                       <p className="mt-2 text-[0.8125rem] text-muted-foreground">
-                        Ex-works {site.city}, before freight
+                        Ex-works {site.city}, before shipping
                       </p>
                     </div>
 
@@ -448,13 +445,13 @@ export default function PricingPage() {
 
           <Reveal delay={120}>
             <p className="q-body mt-6 text-[0.8125rem]">
-              Representative lines. All {products.length} SKUs carry the same
+              Representative lines. Every product we hold in depth carries the same
               five-break structure — see each tile in the{" "}
               <Link href="/products" className="text-blue-electric">
                 shop
               </Link>{" "}
               for its own ladder. Prices are per unit, ex-works {site.city},
-              before freight.
+              before shipping.
             </p>
           </Reveal>
         </div>
@@ -478,7 +475,7 @@ export default function PricingPage() {
               </h2>
               <p className="q-lede mt-7">
                 Lines, quantities and a delivery zip is all {site.contact}{" "}
-                needs. A written figure with freight comes back the same working
+                needs. A written figure with shipping comes back the same working
                 day — and it holds for seven days, so you can quote your own
                 customer off it.
               </p>
@@ -487,7 +484,7 @@ export default function PricingPage() {
                   "No account needed",
                   "Same working day",
                   "Price held 7 days",
-                  "Freight included",
+                  "Shipping included",
                 ].map((point) => (
                   <li
                     key={point}
@@ -515,7 +512,7 @@ export default function PricingPage() {
                 className="inline-flex h-12 items-center justify-center gap-2 rounded-full bg-purple px-7 text-[0.9375rem] font-medium text-white transition-colors duration-300 hover:bg-purple-electric"
               >
                 <WhatsAppIcon className="size-4" />
-                Request Bulk Quote
+                See Current Prices
               </a>
               <Link
                 href="/contact"

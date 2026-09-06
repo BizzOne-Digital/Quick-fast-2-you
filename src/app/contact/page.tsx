@@ -13,7 +13,7 @@ export const metadata: Metadata = {
   description:
     "Reach " +
     site.contact +
-    " at Quick Fast 2 You by WhatsApp, telephone or email for retail and wholesale pricing on security cameras, NVRs, surveillance storage and cabling.",
+    " at Quick Fast 2 You by WhatsApp, telephone or email for pricing and current stock on security cameras, dash cameras, sports action cameras, metal detectors, diamond and gold testers, electronics and gadgets.",
 };
 
 const hours: [string, string][] = [
@@ -33,9 +33,9 @@ const notes = [
     body: "We need it on file before the first invoice so sales tax can be left off. Send a photo with your enquiry and it is handled in one step.",
   },
   {
-    heading: "Send us the site, not just the part number",
+    heading: "Tell us what it is for, not just the part number",
     body:
-      "Channel count, the resolution you need and how many days the site has to look back, and we will size the recorder and the drive for you. If you are local to " +
+      "Tell us what the kit is for and roughly how many you need, and we will point you at the right model or tell you what is landing this week. If you are local to " +
       site.city +
       ", collections from the warehouse are welcome — message ahead and it will be on a pallet ready to load.",
   },
@@ -46,14 +46,14 @@ export default function ContactPage() {
     <>
       <PageHero
         image={heroes.contact}
-        eyebrow="The trade desk"
+        eyebrow="The order desk"
         headline="Get in Touch with Quick Fast 2 You"
         subheadline={
           "One number, one person. " +
           site.contact +
           " answers the desk in " +
           site.city +
-          " — send the camera counts, the recorder and a delivery zip, and a written price with freight comes back the same working day."
+          ". Have a question about a product, or looking for something specific? Our inventory changes regularly, and we are happy to help you find what is currently available."
         }
         actions={
           <>
@@ -88,7 +88,7 @@ export default function ContactPage() {
             <Reveal>
               <p className="q-eyebrow mb-5">Direct lines</p>
               <h3 className="q-display max-w-[14ch] text-frost">
-                Ask for a price. No account needed.
+                Ask about a product. No account needed.
               </h3>
 
               <div className="mt-12 flex flex-col gap-px overflow-hidden rounded-lg border border-hairline bg-hairline">
@@ -243,19 +243,19 @@ export default function ContactPage() {
             <div>
               <p className="q-eyebrow mb-5">Before you write</p>
               <h2 id="browse" className="q-display max-w-[18ch] text-frost">
-                Every camera price is already on the site
+                Every price is already on the site
               </h2>
               <p className="q-lede mt-6">
-                Browse the shop, quick add the domes, bullets and recorder you
-                want at case quantity, and the list writes itself into a
-                message. It is the fastest route to a number.
+                Browse the shop, quick add what you want at case quantity, and
+                the list writes itself into a message. It is the fastest route
+                to a number.
               </p>
             </div>
             <Link
               href="/products"
               className="inline-flex h-12 items-center justify-center gap-2 rounded-full bg-purple px-7 text-[0.9375rem] font-medium text-white transition-colors duration-300 hover:bg-purple-electric"
             >
-              Shop All Cameras
+              Shop All Products
               <ArrowUpRight className="size-4" />
             </Link>
           </Reveal>
