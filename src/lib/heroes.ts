@@ -38,8 +38,8 @@ export const heroes = {
   },
   /** A wall grid of bullet cameras — the catalogue, as a picture. */
   products: {
-    src: "/img/poducts.jpg",
-    alt: "Security product display",
+    src: shot("1557597774-9d273605dfa9"),
+    alt: "",
     position: "center",
   },
   /** Bullet camera at night against marquee lighting. */
