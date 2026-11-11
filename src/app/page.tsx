@@ -105,10 +105,10 @@ export default function Home() {
         subheadline="New deals arrive regularly. Shop electronics and specialty products at prices that make sense — our inventory changes weekly, so it is worth checking back."
         actions={
           <>
-            <Link href="/products" className={heroPrimary}>
-              Shop All Products
+            <a href={site.storeUrl} className={heroPrimary}>
+              Shop Now
               <ArrowUpRight className="size-4" />
-            </Link>
+            </a>
             <Link href="#new-in" className={heroSecondary}>
               See This Week&rsquo;s Deals
               <ChevronRight className="size-4" />

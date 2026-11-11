@@ -95,12 +95,12 @@ export function SiteNav() {
           </nav>
 
           <div className="flex items-center gap-2">
-            <Link
-              href="/contact"
+            <a
+              href={site.storeUrl}
               className="hidden rounded-full bg-purple px-5 py-2.5 text-[0.8125rem] font-medium tracking-[-0.01em] text-white transition-colors duration-300 hover:bg-purple-electric sm:inline-block"
             >
-              Request a quote
-            </Link>
+              Shop Now
+            </a>
             <button
               type="button"
               onClick={() => setOpen((v) => !v)}
@@ -134,12 +134,12 @@ export function SiteNav() {
               </li>
             ))}
           </ul>
-          <Link
-            href="/contact"
+          <a
+            href={site.storeUrl}
             className="mt-8 block rounded-full bg-purple px-6 py-4 text-center text-[0.9375rem] font-medium text-white"
           >
-            Request a quote
-          </Link>
+            Shop Now
+          </a>
           <a
             href={site.phoneHref}
             className="q-num mt-4 block text-center text-sm text-muted-foreground"
